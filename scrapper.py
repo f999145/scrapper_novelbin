@@ -1,7 +1,6 @@
 import requests
 import asyncio, aiohttp
-from config import url, headers, pagin_url
-from operations_with_paths import ChangeDir
+from config import headers, pagin_url
 import time
 from pars import _pars_text, _pars_urls
 from typing import NamedTuple
