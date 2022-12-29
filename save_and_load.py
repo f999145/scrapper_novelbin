@@ -14,10 +14,10 @@ def control_load() -> dict[str, bool]:
             return json.loads(file.read())
     return {}
 
-def _save_texts(datas: dict[str, str]) -> None:
+def _save_texts(datas: dict[str, str], name_zip: str = os.path.join('data','texts.zip')) -> None:
     os.makedirs('data', exist_ok=True)
     with ZipFile(
-        file=os.path.join('data','texts.zip'),
+        file=name_zip,
         mode='w',
         compression=ZIP_DEFLATED,
         compresslevel=1
@@ -26,10 +26,10 @@ def _save_texts(datas: dict[str, str]) -> None:
             if value:
                 zfile.writestr(key, value.encode())
 
-def _load_texts() -> dict[str, str]:
+def _load_texts(name_zip: str = os.path.join('data','texts.zip')) -> dict[str, str]:
     if os.path.isfile(os.path.join('data','texts.zip')):
         return_dict = {}
-        with ZipFile(os.path.join('data','texts.zip')) as zfile:
+        with ZipFile(name_zip) as zfile:
             for item in zfile.filelist:
                 with zfile.open(item.filename) as file:
                     data = file.read().decode('utf-8')

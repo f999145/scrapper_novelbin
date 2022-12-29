@@ -1,30 +1,30 @@
-url = 'https://novelbin.com/b/supreme-magus-novel/chapter-'
-headers = {
-    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0'
-}
+from fake_useragent import UserAgent
+
+url = 'https://novelbin.com/b/supreme-magus-novel/chapter-2'
+
+def get_headers() -> dict[str, str]:
+    ua = UserAgent()
+    headers = {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+                'User-Agent':ua.random
+            }
+    return headers
 
 pagin_url = 'https://novelbin.com/ajax/chapter-option?novelId=supreme-magus-novel&currentChapterId=chapter-4'
 
-"""
-Как можно сохранить прогресс
-
-Можно словарь, ключи ссылки, значение скачен или нет.
-Сохранить в json
-    Если файла не существует то происходит первая загрузка
-
-    # Первое сохранение, когда мы получаем ссылки, 
-    #     и сохраняем его в виде словаря с ключами ссылками и занчениями False
-    функция получающая страницу,
-        Проверяет загружалась ли раньше страница
-        при получении что-то вместо 200 ответа,
-        и при вызове исключения возвращает пустой текст.
-    
-    Уже после выполнения, или прерывания функции(незнаю как сделать)
-        Мы изменяем контрольный файл.
-        Те станицы которые загрузились отмечаем True, нет - False
-        И сохраняем измененный json
-        
-        
-
-"""
+Cookies = {
+	"Host raw": "http://.reg.ru/",
+	"Name raw": "advcake_track_id",
+	"Path raw": "/",
+	"Content raw": "6f8477ef-1c5e-b71b-d460-7df7bbddd998",
+	"Expires": "28-01-2023 12:44:36",
+	"Expires raw": "1674899076",
+	"Send for": "Any type of connection",
+	"Send for raw": "false",
+	"HTTP only raw": "false",
+	"SameSite raw": "no_restriction",
+	"This domain only": "Valid for subdomains",
+	"This domain only raw": "false",
+	"Store raw": "firefox-default",
+	"First Party Domain": ""
+}

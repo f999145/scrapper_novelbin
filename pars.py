@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup as BS
+from text_editing import novel_editing
 from typing import Iterator
 
 def _pars_urls(urls_page: str) -> Iterator[tuple[str, str]]:
@@ -10,7 +11,8 @@ def _pars_urls(urls_page: str) -> Iterator[tuple[str, str]]:
 def _pars_text(html: str):
     soup = BS(html, 'html.parser')
     try:
-        text = soup.find('div', {'id':'chr-content'}).get_text()#strip=True)
+        text = soup.find('div', {'id':'chr-content'}).get_text()
+        text = novel_editing(text)
         comment = 'done'
     except:
         text = ''

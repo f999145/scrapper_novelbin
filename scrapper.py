@@ -1,9 +1,9 @@
 import requests
 import asyncio, aiohttp
-from config import headers, pagin_url
+from config import pagin_url, get_headers
 import time
 from pars import _pars_text, _pars_urls
-from typing import NamedTuple
+from typing import NamedTuple, Iterable
 
 class PageTuple(NamedTuple):
     i: int
@@ -11,10 +11,11 @@ class PageTuple(NamedTuple):
     comment: str
     text: str
 
+
 def get_urls() -> dict[str,str]:
     count = 0
     while True:
-        urls_page = requests.get(url=pagin_url,headers=headers)
+        urls_page = requests.get(url=pagin_url, headers=get_headers())
         if int(urls_page.status_code) == 200:
             break
         print('Что-то пошло не так!')
@@ -27,41 +28,46 @@ def get_urls() -> dict[str,str]:
         time.sleep(3)
     return dict(_pars_urls(urls_page.text))
 
-async def _worker(queue: asyncio.Queue) -> PageTuple:
+async def _worker(queue: asyncio.Queue)  -> list[PageTuple]:
     """Асинхронный воркер который получает информацию с помощью очереди"""
-    index, (url, done) = await queue.get()
-    if not done == 'done':
-        async with aiohttp.ClientSession() as session:
-            try:
-                response = await session.get(url=url, headers=headers)
-            except:
-                response_text = ""
-                comment = 'ex'
-            else:
-                if response.status == 200:
-                    text = await response.text()
-                    response_text, comment = _pars_text(text)
-                else:
+    reponse_assync: list[PageTuple] = []
+    while True:
+        index, (url, done) = await queue.get()
+        if not done == 'done':
+            async with aiohttp.ClientSession(headers=get_headers()) as session:
+                try:
+                    response = await session.get(url=url)
+                except:
                     response_text = ""
-                    comment = 'not 200'
-    else:
-        response_text = ""
-        comment = 'done'
-    print(f'{index:04d} is {comment}')
-    queue.task_done()
-    return PageTuple(index, url, comment, response_text)
+                    comment = 'ex'
+                else:
+                    if response.status == 200:
+                        text = await response.text()
+                        response_text, comment = _pars_text(text)
+                    else:
+                        response_text = ""
+                        comment = f'not; is {response.status}'
+            print(f'{index:04d} is {comment}')
+        else:
+            response_text = ""
+            comment = 'done'
+        queue.task_done()
+        reponse_assync.append(PageTuple(index, url, comment, response_text))
+        if queue.empty():
+            break
+    return reponse_assync
 
 # Создаем очередь, которую будем использовать
 # для хранения рабочей нагрузки.    
 def _queue(urls_list: dict[str, str]) -> asyncio.Queue[tuple[int, tuple[str, str]]]:
     queue: asyncio.Queue[tuple[int, tuple[str, str]]]  = asyncio.Queue()
-    for op in list(enumerate(urls_list.items()))[:7]:
+    for op in list(enumerate(urls_list.items()))[:14]:
         # добавляем информацию в очередь
         queue.put_nowait(op)
     return queue
     
 
-async def get_pages_tasks(urls_list: dict[str, str]) -> list[PageTuple]:
+async def get_pages_tasks(urls_list: dict[str, str]) -> list[list[PageTuple]]:
     tasks = []
     queue = _queue(urls_list)
     # Создаем семь рабочих задач для одновременной обработки очереди.
@@ -77,9 +83,10 @@ async def get_pages_tasks(urls_list: dict[str, str]) -> list[PageTuple]:
     for task in tasks:
         task.cancel()
     # Ждем, остановку задач.
-    pages = await asyncio.gather(*tasks, return_exceptions=True)
-    return pages
+    return await asyncio.gather(*tasks, return_exceptions=True)
+
 
 def run_async(urls_list: dict[str, str]) -> list[PageTuple]:
-    return asyncio.run(get_pages_tasks(urls_list))
+    list_pages = asyncio.run(get_pages_tasks(urls_list))
+    return sum(list_pages, [])
     

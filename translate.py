@@ -1,11 +1,26 @@
 from yandexfreetranslate import YandexFreeTranslate
 from save_and_load import _load_texts
-yt = YandexFreeTranslate()
-# yt = YandexFreeTranslate(api = "web")
-# yt = YandexFreeTranslate(api = "ios")
+import multiprocessing as mp
 
-# yt.set_proxy("socks5", "localhost", 9050, "username", "password")
-test = _load_texts()
-text = test[list(test.keys())[2]]
-print()
-print(yt.translate("en", "ru", text))
+
+
+def _worker(queue: tuple[str, str]) -> tuple[str, str]:
+    key, value = queue
+    yt = YandexFreeTranslate()
+    print(f'{key}')
+    text = yt.translate("en", "ru", value)
+    return (key, text)
+
+
+def run_translate()-> list[tuple[str, str]]:
+    queue = _load_texts().items()
+    with mp.Pool(mp.cpu_count()) as process:
+        workreturn = process.map(_worker, queue)
+    return workreturn
+
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()
