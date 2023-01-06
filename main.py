@@ -1,8 +1,9 @@
-from scrapper import get_urls, run_async, PageTuple
+from data.scrapper import get_urls, run_async
 from typing import Iterable
-from decor import spent_time
-from save_and_load import control_load, control_save, save_texts_to_zip, _save_texts, _load_texts
-from translate import run_translate
+from data.decor import spent_time
+from data.save_and_load import control_load, control_save, save_texts_to_zip, _save_texts, _load_texts
+from data.translate import run_translate
+from data.my_class import PageTuple
 
 
 
@@ -30,19 +31,23 @@ def scrapping():
     
 @spent_time
 def translate():
-    texts = dict(run_translate())
-    _save_texts(texts, 'data/texts_rus.zip')
-
-def _join_text():
-    texts = _load_texts('data/texts_rus.zip')
-    text = '\n\n\n'.join(texts.values())
+    texts = run_translate()
+    
+    text = '\n'.join(texts)
+    
     with open('data/text_rus.txt', mode='w', encoding='utf-8') as file:
         file.write(text)
+
+def _sorted_texts():
+    texts = _load_texts()
+    texts = dict(sorted(texts.items()))
+    _save_texts(texts)
 
 # @spent_time
 def main():
     # scrapping()
-    # translate()
+    translate()
+    # _sorted_texts()
     # _join_text()
     pass
 

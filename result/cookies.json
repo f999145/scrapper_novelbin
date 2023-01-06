@@ -1,0 +1,92 @@
+[
+    {
+        "domain": "novelbin.com",
+        "expiry": 1706099206,
+        "httpOnly": false,
+        "name": "__gads",
+        "path": "/",
+        "secure": false,
+        "value": "ID=d19de192da937fa3:T=1672403206:S=ALNI_Mb_E-zOkKbYMbB572pcXpG7BW1VGw"
+    },
+    {
+        "domain": ".novelbin.com",
+        "expiry": 1706963203,
+        "httpOnly": false,
+        "name": "_ga",
+        "path": "/",
+        "secure": false,
+        "value": "GA1.1.1937382153.1672403203"
+    },
+    {
+        "domain": "novelbin.com",
+        "expiry": 1673008003,
+        "httpOnly": false,
+        "name": "novels_history",
+        "path": "/",
+        "secure": false,
+        "value": "%5B%7B%22id%22%3A%22supreme-magus-novel%22%2C%22name%22%3A%22Supreme%20Magus%22%2C%22url%22%3A%22https%3A%2F%2Fnovelbin.com%2Fb%2Fsupreme-magus-novel%22%2C%22chapter%22%3A%7B%22id%22%3A%22chapter-2%22%2C%22name%22%3A%22-2%20Joke%20.%20Do%20not%20read%20before%20chap%2057%22%2C%22url%22%3A%22https%3A%2F%2Fnovelbin.com%2Fb%2Fsupreme-magus-novel%2Fchapter-2%22%2C%22chapter_id%22%3A%22%22%7D%7D%5D"
+    },
+    {
+        "domain": "novelbin.com",
+        "expiry": 1672406798,
+        "httpOnly": false,
+        "name": "cf_chl_2",
+        "path": "/",
+        "secure": false,
+        "value": "30ba0ea1dd2a926"
+    },
+    {
+        "domain": "novelbin.com",
+        "expiry": 1672463202,
+        "httpOnly": true,
+        "name": "connect.sid",
+        "path": "/",
+        "secure": false,
+        "value": "s%3ArcCvzu8Vp6L9vVCYQNhYNVXPdMlMjLIC.Z%2Fmf16KDIwDaHnwnw4U8VsmPvYCbovdyGcGacvUUmmw"
+    },
+    {
+        "domain": ".novelbin.com",
+        "expiry": 1703939202,
+        "httpOnly": true,
+        "name": "cf_clearance",
+        "path": "/",
+        "sameSite": "None",
+        "secure": true,
+        "value": "6HQtEcl6V6hLD6YWfLJJ.GSxiL6x1J8FZQM.eYZTLjg-1672403204-0-250"
+    },
+    {
+        "domain": ".novelbin.com",
+        "expiry": 1677598007,
+        "httpOnly": false,
+        "name": "truvid_protected",
+        "path": "/",
+        "secure": false,
+        "value": "{\"val\":\"c\",\"level\":1,\"geo\":\"RU\",\"timestamp\":1672403207}"
+    },
+    {
+        "domain": ".novelbin.com",
+        "expiry": 1706099206,
+        "httpOnly": false,
+        "name": "__gpi",
+        "path": "/",
+        "secure": false,
+        "value": "UID=00000b99d56feb18:T=1672403206:RT=1672403206:S=ALNI_MZtSqzYDVqQ9A8pcFhJZYT0is_fvw"
+    },
+    {
+        "domain": ".novelbin.com",
+        "expiry": 1706963203,
+        "httpOnly": false,
+        "name": "_ga_MDT18DLCET",
+        "path": "/",
+        "secure": false,
+        "value": "GS1.1.1672403203.1.0.1672403203.0.0.0"
+    },
+    {
+        "domain": "novelbin.com",
+        "httpOnly": false,
+        "name": "_csrf",
+        "path": "/",
+        "secure": false,
+        "value": "T1RKv1TricqLUm7xZTQDBoEP"
+    }
+]

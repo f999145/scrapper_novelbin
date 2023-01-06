@@ -1,5 +1,8 @@
 from fake_useragent import UserAgent
 
+folder_result = 'result'
+name_eng_zipfile = 'texts.zip'
+
 url = 'https://novelbin.com/b/supreme-magus-novel/chapter-2'
 
 def get_headers() -> dict[str, str]:
@@ -28,3 +31,4 @@ Cookies = {
 	"Store raw": "firefox-default",
 	"First Party Domain": ""
 }
+
